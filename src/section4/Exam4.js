@@ -1,6 +1,7 @@
 import React from 'react';
 import Validation from './Validation';
 import Character from './Character';
+import styles from './Button.module.css';
 
 class Exam4 extends React.Component {
   constructor(props) {
@@ -64,6 +65,7 @@ class Exam4 extends React.Component {
         <p>{this.state.length} 글자</p>
         <Validation length={this.state.length}></Validation>
         {chars}
+        <button className={styles.error}>Error Btn</button>
       </div>
     );
   }
