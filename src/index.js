@@ -3,10 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux;';
-import reducer from './section14/store/reducer';
+// import { BrowserRouter } from 'react-router-dom';
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+import counterReducer from './section14/store/reducers/counter';
+import resultReducer from './section14/store/reducers/result';
+
+const rootReducer = combineReducers({
+  ctr: counterReducer,
+  res: resultReducer,
+});
+
 // import axios from 'axios';
 
 // axios.defaults.baseURL = 'http://jsonplaceholder.typicode.com';
@@ -35,7 +42,7 @@ import reducer from './section14/store/reducer';
 //   }
 // );
 
-const store = createStore(reducer);
+const store = createStore(rootReducer);
 
 ReactDOM.render(
   <React.StrictMode>

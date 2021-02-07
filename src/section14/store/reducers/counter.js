@@ -1,4 +1,4 @@
-import * as actionType from './actions';
+import * as actionType from '../actions';
 
 const initialState = {
   counter: 0,
@@ -28,21 +28,6 @@ const reducer = (state = initialState, action) => {
     return {
       ...state,
       counter: state.counter - action.value,
-    };
-  }
-  if (action.type === actionType.STORE) {
-    return {
-      ...state,
-      results: state.results.concat({ id: new Date(), value: state.counter }),
-    };
-  }
-  if (action.type === actionType.DELETE) {
-    const updatedArray = state.results.filter(
-      (result) => result.id !== action.resultElId
-    );
-    return {
-      ...state,
-      results: updatedArray,
     };
   }
   return state;
