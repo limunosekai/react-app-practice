@@ -3,16 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-// import { BrowserRouter } from 'react-router-dom';
-import { createStore, combineReducers } from 'redux';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import counterReducer from './section14/store/reducers/counter';
-import resultReducer from './section14/store/reducers/result';
+import { createStore } from 'redux';
+import reducer from './section8/store/reducer';
+// import counterReducer from './section14/store/reducers/counter';
+// import resultReducer from './section14/store/reducers/result';
 
-const rootReducer = combineReducers({
-  ctr: counterReducer,
-  res: resultReducer,
-});
+// const rootReducer = combineReducers({
+//   ctr: counterReducer,
+//   res: resultReducer,
+// });
 
 // import axios from 'axios';
 
@@ -42,16 +43,18 @@ const rootReducer = combineReducers({
 //   }
 // );
 
-const store = createStore(rootReducer);
+const store = createStore(reducer);
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <BrowserRouter>
-      <App />
-    </BrowserRouter> */}
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
+    {/* <Provider store={store}>
+      <App />
+    </Provider> */}
   </React.StrictMode>,
   document.getElementById('root')
 );
