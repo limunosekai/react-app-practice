@@ -5,8 +5,11 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
-import reducer from './section8/store/reducer';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+import thunk from 'redux-thunk';
+import burgerBuilderReducer from './section8/store/reducers/burgerBuilder';
+import orderReducer from './section8/store/reducers/order';
+
 // import counterReducer from './section14/store/reducers/counter';
 // import resultReducer from './section14/store/reducers/result';
 
@@ -43,23 +46,31 @@ import reducer from './section8/store/reducer';
 //   }
 // );
 
-const logger = (store) => {
-  // store를 파라미터로 받음
-  return (next) => {
-    // 액션을 다음 미들웨어에게 전달, 다음 미들웨어가 없으면 리듀서에게 액션을 전달
-    return (action) => {
-      // 현재 처리하고 있는 액션
-      console.log(action);
-      const result = next(action);
-      console.log(store.getState());
-      return result;
-    };
-  };
-};
+// const logger = (store) => {
+//   // store를 파라미터로 받음
+//   return (next) => {
+//     // 액션을 다음 미들웨어에게 전달, 다음 미들웨어가 없으면 리듀서에게 액션을 전달
+//     return (action) => {
+//       // 현재 처리하고 있는 액션
+//       console.log(action);
+//       const result = next(action);
+//       console.log(store.getState());
+//       return result;
+//     };
+//   };
+// };
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(reducer, composeEnhancers(applyMiddleware(logger)));
+const rootReducer = combineReducers({
+  burgerBuilder: burgerBuilderReducer,
+  order: orderReducer,
+});
+
+const store = createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware(thunk))
+);
 
 ReactDOM.render(
   <React.StrictMode>
