@@ -28,7 +28,7 @@ const buildControls = (props) => (
       disabled={!props.purchasable}
       onClick={props.ordered}
     >
-      주문하기
+      {props.isAuth ? '주문하기' : '로그인'}
     </button>
   </div>
 );
