@@ -9,6 +9,7 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import burgerBuilderReducer from './section8/store/reducers/burgerBuilder';
 import orderReducer from './section8/store/reducers/order';
+import authReducer from './section8/store/reducers/auth';
 
 // import counterReducer from './section14/store/reducers/counter';
 // import resultReducer from './section14/store/reducers/result';
@@ -65,6 +66,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducer = combineReducers({
   burgerBuilder: burgerBuilderReducer,
   order: orderReducer,
+  auth: authReducer,
 });
 
 const store = createStore(
