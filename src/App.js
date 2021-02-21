@@ -3,15 +3,26 @@ import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Layout from './section8/hoc/Layout/Layout';
 import BurgerBuilder from './section8/containers/BurgerBuilder/BurgerBuilder';
-import Checkout from './section8/containers/Checkout/Checkout';
-import Orders from './section8/containers/Orders/Orders';
-import Auth from './section8/containers/Auth/Auth';
 import logout from './section8/containers/Auth/Logout/Logout';
 import * as actions from './section8/store/actions/index';
+import asyncComponent from './section8/hoc/asyncComponent/asyncComponent';
 
 // import Blog from './section9/containers/Blog/Blog';
 // import Control from './section11/Control';
 // import Counter from './section14/containers/Counter/Counter';
+
+// lazy loading
+const asyncCheckout = asyncComponent(() => {
+  return import('./section8/containers/Checkout/Checkout');
+});
+
+const asyncOrders = asyncComponent(() => {
+  return import('./section8/containers/Orders/Orders');
+});
+
+const asyncAuth = asyncComponent(() => {
+  return import('./section8/containers/Auth/Auth');
+});
 
 class App extends Component {
   componentDidMount() {
@@ -21,7 +32,7 @@ class App extends Component {
     // 인증 안된 사용자 접속시
     let routes = (
       <Switch>
-        <Route path='/auth' component={Auth} />
+        <Route path='/auth' component={asyncAuth} />
         <Route path='/' exact component={BurgerBuilder} />
         <Redirect to='/' />
       </Switch>
@@ -31,9 +42,10 @@ class App extends Component {
     if (this.props.isAuthenticated) {
       routes = (
         <Switch>
-          <Route path='/checkout' component={Checkout} />
-          <Route path='/orders' component={Orders} />
+          <Route path='/checkout' component={asyncCheckout} />
+          <Route path='/orders' component={asyncOrders} />
           <Route path='/logout' component={logout} />
+          <Route path='/auth' component={asyncAuth} />
           <Route path='/' exact component={BurgerBuilder} />
           <Redirect to='/' />
         </Switch>
